@@ -11,7 +11,7 @@ def get_disease_info(disease_id):
         return None
 
     drugs = graph.run(
-        "MATCH (d:Disease)-[:CtD]->(c:Compound) WHERE d.id = $disease_id RETURN c.name",
+        "MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name",
         disease_id=disease_id
     ).data()
 
