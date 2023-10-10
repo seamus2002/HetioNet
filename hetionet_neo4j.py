@@ -1,4 +1,4 @@
-from py2neo import Graph, Node, Relationship
+from py2neo import Graph
 
 # Neo4j Configuration
 graph = Graph("bolt://localhost:7687", user="neo4j", password="fall2023")
@@ -35,7 +35,12 @@ def get_disease_info(disease_id):
 
 # Find compounds to treat new disease
 def find_compounds_to_treat_new_disease(new_disease_id):
-    print("Under Development")
+    unknown_cures = graph.run(
+        '''MATCH (d:Disease{{id:'{}'}})-[:DlA]->(a:Anatomy)-[:AuG|:AdG]->(g:Gene)<-[:CdG|:CuG]-(dc:Compound)-[:CrC*0..1]-(c:Compound)
+            WHERE NOT (c)-->(d) AND ( (a)-[:AdG]->(g)<-[:CuG]-(dc) OR (a)-[:AuG]->(g)<-[:CdG]-(dc))
+            RETURN collect(Distinct c.name)'''.format(new_disease_id))
+
+    return unknown_cures
 
 
 def main():
@@ -51,7 +56,10 @@ def main():
             disease_id = input("Enter Disease ID: ")
             result = get_disease_info(disease_id)
             if result:
-                print(result)
+                print(f"\nDisease Name: {result['disease_name']} \n")
+                print(f"Drugs that can cure/palliate: {result['drugs']} \n")
+                print(f"Genes that cause this disease: {result['genes']} \n")
+                print(f"Disease Locations: {result['locations']} \n")
             else:
                 print("Disease not found.")
 
@@ -59,11 +67,12 @@ def main():
             new_disease_id = input("Enter New Disease ID: ")
             compounds = find_compounds_to_treat_new_disease(new_disease_id)
             if compounds:
-                print("Compounds to treat the new disease:")
+                print("Compounds to treat the new disease: ")
                 for compound in compounds:
                     print(compound)
             else:
                 print("No compounds found for the new disease.")
+            print("\n")
 
         elif choice == "3":
             break
