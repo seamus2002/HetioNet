@@ -14,13 +14,18 @@ def get_disease_info(disease_id):
     result = db.nodes.find_one({"id": disease_id})
     if result:
         disease_name = result["name"]
-        # source = compound, metaedge = CtD, target = disease
+        drugs = [edge["source"] for edge in db.edges.find(
+            {"metaedge": "CtD", "target": disease_id})]
+        genes = [edge["target"] for edge in db.edges.find(
+            {"source": disease_id, "metaedge": "DdG"})]
+        locations = [edge["target"] for edge in db.edges.find(
+            {"source": disease_id, "metaedge": "DlA"})]
 
     return {
         "disease_name": disease_name,
-        "drugs": "Not finished.",
-        "genes": "Not finished.",
-        "locations": "Not finished.",
+        "drugs": drugs,
+        "genes": genes,
+        "locations": locations,
     }
 
 
