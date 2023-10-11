@@ -8,18 +8,18 @@
 
 ### 🌐 Neo4j
 
-`MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name`
-`MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name`
-`MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name`
+- `MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name` (Line 14)
+- `MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name` (Line 19)
+- `MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name` (Line 24)
 
 ### 📚 Hetionet
 
-`db.edges.find({"metaedge": "CtD", "target": disease_id})`
-`drugs.append(db.nodes.find_one({"id": id})["name"])`
-`db.edges.find({"source": disease_id, "metaedge": "DdG"})`
-`genes.append(db.nodes.find_one({"id": id})["name"])`
-`db.edges.find({"source": disease_id, "metaedge": "DlA"})]`
-`locations.append(db.nodes.find_one({"id": id})["name"])`
+- `db.edges.find({"metaedge": "CtD", "target": disease_id})` (Line 18)
+- `drugs.append(db.nodes.find_one({"id": id})["name"])` (Line 22)
+- `db.edges.find({"source": disease_id, "metaedge": "DdG"})` (Line 24)
+- `genes.append(db.nodes.find_one({"id": id})["name"])` (Line 28)
+- `db.edges.find({"source": disease_id, "metaedge": "DlA"})` (Line 30)
+- `locations.append(db.nodes.find_one({"id": id})["name"])` (Line 34)
 
 ## 🚀 Potential Improvements
 
