@@ -6,13 +6,13 @@
 
 ## 🖥️ All Queries
 
-### 🌐 Neo4j
+### 🌐 Neo4j (hetionet_neo4j.py)
 
 - `MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name` (Line 14)
 - `MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name` (Line 19)
 - `MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name` (Line 24)
 
-### 📚 MongoDB
+### 📚 MongoDB (hetionet_mongodb.py)
 
 - `db.edges.find({"metaedge": "CtD", "target": disease_id})` (Line 18)
 - `drugs.append(db.nodes.find_one({"id": id})["name"])` (Line 22)
