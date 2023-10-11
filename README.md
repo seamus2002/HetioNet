@@ -1,3 +1,38 @@
+# Project Document
+
+## Design Diagram
+
+![Design Diagram](<images/Screenshot 2023-10-11 at 5.16.24 PM.png>)
+
+## All Quiries
+
+### Neo4j
+
+`MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name` (Line 14)
+`MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name` (line 19)
+`MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name` (line 24)
+
+### Hetionet
+
+`db.edges.find({"metaedge": "CtD", "target": disease_id})` (Line 18)
+`drugs.append(db.nodes.find_one({"id": id})["name"])` (Line 22)
+`db.edges.find({"source": disease_id, "metaedge": "DdG"})` (Line 24)
+`genes.append(db.nodes.find_one({"id": id})["name"])` (Line 28)
+`db.edges.find({"source": disease_id, "metaedge": "DlA"})]` (Line 30)
+`locations.append(db.nodes.find_one({"id": id})["name"])` (Line 34)
+
+## Potential improvements
+
+### Improvements for Neo4j
+
+- Due to the way the data is organized there are a few potential improvements that could be made. The most obvious one is to add a relationship between the disease and the gene. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the genes that cause a disease in a single query.
+
+- Another improvement would be to add a relationship between the disease and the anatomy. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the anatomies that cause a disease in a single query.
+
+### Improvements for Hetionet
+
+- One potential improvement would be to add a relationship between the disease and the gene. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the genes that cause a disease in a single query.
+
 # HetioNet
 
 Build a database system to model HetioNet.
@@ -15,12 +50,14 @@ The database should at least answer the following questions in the quickest resp
 - A Python command-line client interface for database creation and query
 
 - Use at least two types of NoSQL stores
+
   - Document (MongoDB/PyMongo)
   - Graph (Neo4j/Py2neo)
   - Key-value
   - Column Family (Cassandra/DataStax Python Driver)
 
 - Document
+
   - Design diagram
   - All queries
   - Potential improvements (i.e. how to speed up the query)
@@ -32,13 +69,16 @@ The database should at least answer the following questions in the quickest resp
 ## Rubric
 
 - Database design: 30%
+
   - Rationale: 15%
   - Implementation: 15%
 
 - Query Functionality: 40%
+
   - Each query: 20%
 
 - Client interface: 20%
+
   - GUI: 10 points
 
 - Presentation: 10%
@@ -69,8 +109,8 @@ Compound::DB00014,CuG,Gene::1
 Disease::DOID:0050156,DlA,Anatomy::UBERON:0000002
 Anatomy::UBERON:0000002,AdG,Gene::1
 
-
 # Neo4j Queries for Testing
+
 To delete all nodes and relationships:
 MATCH (n)
 DETACH DELETE n
