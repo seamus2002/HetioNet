@@ -1,39 +1,39 @@
-# Project Document
+# 📖 Project Document
 
-## Design Diagram
+## 📐 Design Diagram
 
 ![Design Diagram](<images/Screenshot 2023-10-11 at 5.16.24 PM.png>)
 
-## All Quiries
+## 🖥️ All Queries
 
-### Neo4j
+### 🌐 Neo4j
 
-`MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name` (Line 14)
-`MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name` (line 19)
-`MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name` (line 24)
+`MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name`
+`MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name`
+`MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name`
 
-### Hetionet
+### 📚 Hetionet
 
-`db.edges.find({"metaedge": "CtD", "target": disease_id})` (Line 18)
-`drugs.append(db.nodes.find_one({"id": id})["name"])` (Line 22)
-`db.edges.find({"source": disease_id, "metaedge": "DdG"})` (Line 24)
-`genes.append(db.nodes.find_one({"id": id})["name"])` (Line 28)
-`db.edges.find({"source": disease_id, "metaedge": "DlA"})]` (Line 30)
-`locations.append(db.nodes.find_one({"id": id})["name"])` (Line 34)
+`db.edges.find({"metaedge": "CtD", "target": disease_id})`
+`drugs.append(db.nodes.find_one({"id": id})["name"])`
+`db.edges.find({"source": disease_id, "metaedge": "DdG"})`
+`genes.append(db.nodes.find_one({"id": id})["name"])`
+`db.edges.find({"source": disease_id, "metaedge": "DlA"})]`
+`locations.append(db.nodes.find_one({"id": id})["name"])`
 
-## Potential improvements
+## 🚀 Potential Improvements
 
-### Improvements for Neo4j
+### 🌐 Improvements for Neo4j
 
 - Due to the way the data is organized there are a few potential improvements that could be made. The most obvious one is to add a relationship between the disease and the gene. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the genes that cause a disease in a single query.
 
 - Another improvement would be to add a relationship between the disease and the anatomy. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the anatomies that cause a disease in a single query.
 
-### Improvements for Hetionet
+### 📚 Improvements for MongoDB
 
 - One potential improvement would be to add a relationship between the disease and the gene. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the genes that cause a disease in a single query.
 
-# HetioNet
+# Project Instructions
 
 Build a database system to model HetioNet.
 
