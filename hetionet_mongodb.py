@@ -11,16 +11,20 @@ edges = db["edges"]
 
 # Get disease info
 def get_disease_info(disease_id):
+    result = db.nodes.find_one({"id": disease_id})
+    if result:
+        disease_name = result["name"]
+        # source = compound, metaedge = CtD, target = disease
+
     return {
-        "disease_name": "Not finished.",
+        "disease_name": disease_name,
         "drugs": "Not finished.",
         "genes": "Not finished.",
         "locations": "Not finished.",
     }
 
+
 # Find compounds to treat new disease
-
-
 def find_compounds_to_treat_new_disease(new_disease_id):
     return "Not finished."
 
