@@ -3,7 +3,7 @@ import csv
 
 client = MongoClient("mongodb://localhost:27017/")
 
-db = client["hetionet"]
+db = client["hetiosample"]
 
 nodes = db["nodes"]
 edges = db["edges"]

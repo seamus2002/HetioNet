@@ -1,4 +1,8 @@
+from py2neo import Graph
 from pymongo import MongoClient
+
+# Neo4j Configuration
+graph = Graph("bolt://localhost:7687", user="neo4j", password="fall2023")
 
 # MongoDB Configuration
 client = MongoClient("mongodb://localhost:27017/")
@@ -11,27 +15,27 @@ edges = db["edges"]
 
 # Get disease info
 def get_disease_info(disease_id):
-    result = db.nodes.find_one({"id": disease_id})
+    result = nodes.find_one({"id": disease_id})
     if result:
         disease_name = result["name"]
 
-        drug_ids = [edge["source"] for edge in db.edges.find(
+        drug_ids = [edge["source"] for edge in edges.find(
             {"metaedge": "CtD", "target": disease_id})]
         drugs = []
         for id in drug_ids:
-            drugs.append(db.nodes.find_one({"id": id})["name"])
+            drugs.append(nodes.find_one({"id": id})["name"])
 
-        gene_ids = [edge["target"] for edge in db.edges.find(
-            {"source": disease_id, "metaedge": "DdG"})]
+        gene_ids = [edge["target"] for edge in edges.find(
+            {"source": disease_id, "metaedge": {"$in": ["DdG", "DuG"]}})]
         genes = []
         for id in gene_ids:
-            genes.append(db.nodes.find_one({"id": id})["name"])
+            genes.append(nodes.find_one({"id": id})["name"])
 
-        location_ids = [edge["target"] for edge in db.edges.find(
+        location_ids = [edge["target"] for edge in edges.find(
             {"source": disease_id, "metaedge": "DlA"})]
         locations = []
         for id in location_ids:
-            locations.append(db.nodes.find_one({"id": id})["name"])
+            locations.append(nodes.find_one({"id": id})["name"])
 
     return {
         "disease_name": disease_name,
@@ -43,7 +47,12 @@ def get_disease_info(disease_id):
 
 # Find compounds to treat new disease
 def find_compounds_to_treat_new_disease(new_disease_id):
-    return "Not finished."
+    unknown_cures = graph.run(
+        '''MATCH (d:Disease{{id:'{}'}})-[:DlA]->(a:Anatomy)-[:AuG|:AdG]->(g:Gene)<-[:CdG|:CuG]-(dc:Compound)-[:CrC*0..1]-(c:Compound)
+            WHERE NOT (c)-->(d) AND ( (a)-[:AdG]->(g)<-[:CuG]-(dc) OR (a)-[:AuG]->(g)<-[:CdG]-(dc))
+            RETURN collect(Distinct c.name)'''.format(new_disease_id))
+
+    return unknown_cures
 
 
 def main():
