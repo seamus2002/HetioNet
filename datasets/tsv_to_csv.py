@@ -1,7 +1,7 @@
 import re
 
-with open("sample_edges.tsv", 'r') as myfile:
-    with open("sample_edges.csv", 'w') as csv_file:
+with open("sample_nodes.tsv", 'r') as myfile:
+    with open("sample_nodes.csv", 'w') as csv_file:
         for line in myfile:
 
             # Replace every tab with comma
