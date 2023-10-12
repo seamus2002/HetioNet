@@ -1,41 +1,44 @@
 # 📖 Project Document
 
-## 📐 Design Diagram
+## 📐 Neo4j Design Diagram
 
-![Design Diagram](<images/Screenshot 2023-10-11 at 5.16.24 PM.png>)
+![Neo4j Diagram](images/Neo4j_Diagram.jpg)
+
+## 📐 Neo4j Design Diagram
+
+![MondoDB Diagram](images/MondoDB_Diagram.jpg)
 
 ## 🖥️ All Queries
 
-### 🌐 Neo4j (hetionet_neo4j.py)
+### 📚 Query One (MongoDB)
 
-- `MATCH (c:Compound)-[:CtD]->(d:Disease) WHERE d.id = $disease_id RETURN c.name` (Line 14)
-- `MATCH (d:Disease)-[:DdG]->(g:Gene) WHERE d.id = $disease_id RETURN g.name` (Line 19)
-- `MATCH (d:Disease)-[:DlA]->(a:Anatomy) WHERE d.id = $disease_id RETURN a.name` (Line 24)
+- `disease_name = result["name"]` (Line 20)
+- `edges.find({"metaedge": "CtD", "target": disease_id})` (Line 22)
+- `nodes.find_one({"id": id})["name"]` (Line 26)
+- `edges.find({"source": disease_id, "metaedge": {"$in": ["DdG", "DuG"]}})` (Line 28)
+- `nodes.find_one({"id": id})["name"]` (Line 32)
+- `edges.find({"source": disease_id, "metaedge": "DlA"})` (Line 34)
+- `nodes.find_one({"id": id})["name"]` (Line 38)
 
-### 📚 MongoDB (hetionet_mongodb.py)
+### 🌐 Query Two (Neo4j)
 
-- `db.edges.find({"metaedge": "CtD", "target": disease_id})` (Line 18)
-- `drugs.append(db.nodes.find_one({"id": id})["name"])` (Line 22)
-- `db.edges.find({"source": disease_id, "metaedge": "DdG"})` (Line 24)
-- `genes.append(db.nodes.find_one({"id": id})["name"])` (Line 28)
-- `db.edges.find({"source": disease_id, "metaedge": "DlA"})` (Line 30)
-- `locations.append(db.nodes.find_one({"id": id})["name"])` (Line 34)
+- `graph.run('''MATCH (d:Disease{{id:'{}'}})-[:DlA]->(a:Anatomy)-[:AuG|:AdG]->(g:Gene)<-[:CdG|:CuG]-(dc:Compound)-[:CrC*0..1]-(c:Compound)WHERE NOT (c)-->(d) AND ( (a)-[:AdG]->(g)<-[:CuG]-(dc) OR (a)-[:AuG]->(g)<-[:CdG]-(dc))RETURN collect(Distinct c.name)'''.format(new_disease_id))` (Line 50)
 
 ## 🚀 Potential Improvements
 
-### 🌐 Improvements for Neo4j
+### 🌐 Improvements for Query 1 (MongoDB)
 
-- Due to the way the data is organized there are a few potential improvements that could be made. The most obvious one is to add a relationship between the disease and the gene. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the genes that cause a disease in a single query.
+- Potnetial improvement is to have a collectin for each kind of node. This would shorten the time it takes to search for all the compounds, genes, and anatomies that are related to the disease.
 
-- Another improvement would be to add a relationship between the disease and the anatomy. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the anatomies that cause a disease in a single query.
+- deploying the database on the cloud would allow for faster queries due to sharding techniques.
 
-### 📚 Improvements for MongoDB
+### 📚 Improvements for Query 2(Neo4j)
 
-- One potential improvement would be to add a relationship between the disease and the gene. This would allow us to find all the compounds that can treat a disease in a single query. This would also allow us to find all the genes that cause a disease in a single query.
+- It would be benificial to use "Read Replicas" to optimize for read-heavy workloads. However, since we deployed the database locally we were unable to utilize this feature.
 
 # Project Instructions
 
-Build a database system to model HetioNet.
+Build a database system to model HetioNet.(MongoDb & Neo4j)
 
 ## Instructions
 
