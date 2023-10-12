@@ -1,12 +1,12 @@
 # 📖 Project Document
 
+## 📐 MongoDB Design Diagram
+
+![MondoDB Diagram](images/MondoDB_Diagram.jpg)
+
 ## 📐 Neo4j Design Diagram
 
 ![Neo4j Diagram](images/Neo4j_Diagram.jpg)
-
-## 📐 Neo4j Design Diagram
-
-![MondoDB Diagram](images/MondoDB_Diagram.jpg)
 
 ## 🖥️ All Queries
 
