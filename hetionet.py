@@ -76,10 +76,10 @@ def main():
                 print("Disease not found.")
 
         elif choice == "2":
-            new_disease_id = input("Enter New Disease ID: ")
+            new_disease_id = input("Enter Disease ID: ")
             compounds = find_compounds_to_treat_new_disease(new_disease_id)
             if compounds:
-                print("Compounds to treat the new disease: ")
+                print("Potential compounds to treat the disease: ")
                 for compound in compounds:
                     print(compound)
             else:
