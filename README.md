@@ -1,4 +1,4 @@
-# 📖 Project Document
+# 📖 HetioNet
 
 ## 📐 MongoDB Design Diagram
 
