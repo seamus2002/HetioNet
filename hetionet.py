@@ -16,26 +16,28 @@ edges = db["edges"]
 # Get disease info
 def get_disease_info(disease_id):
     result = nodes.find_one({"id": disease_id})
-    if result:
-        disease_name = result["name"]
+    if not result:
+        return None
 
-        drug_ids = [edge["source"] for edge in edges.find(
-            {"metaedge": "CtD", "target": disease_id})]
-        drugs = []
-        for id in drug_ids:
-            drugs.append(nodes.find_one({"id": id})["name"])
+    disease_name = result["name"]
 
-        gene_ids = [edge["target"] for edge in edges.find(
-            {"source": disease_id, "metaedge": {"$in": ["DdG", "DuG"]}})]
-        genes = []
-        for id in gene_ids:
-            genes.append(nodes.find_one({"id": id})["name"])
+    drug_ids = [edge["source"] for edge in edges.find(
+        {"metaedge": "CtD", "target": disease_id})]
+    drugs = []
+    for id in drug_ids:
+        drugs.append(nodes.find_one({"id": id})["name"])
 
-        location_ids = [edge["target"] for edge in edges.find(
-            {"source": disease_id, "metaedge": "DlA"})]
-        locations = []
-        for id in location_ids:
-            locations.append(nodes.find_one({"id": id})["name"])
+    gene_ids = [edge["target"] for edge in edges.find(
+        {"source": disease_id, "metaedge": {"$in": ["DdG", "DuG"]}})]
+    genes = []
+    for id in gene_ids:
+        genes.append(nodes.find_one({"id": id})["name"])
+
+    location_ids = [edge["target"] for edge in edges.find(
+        {"source": disease_id, "metaedge": "DlA"})]
+    locations = []
+    for id in location_ids:
+        locations.append(nodes.find_one({"id": id})["name"])
 
     return {
         "disease_name": disease_name,
