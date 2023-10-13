@@ -10,7 +10,7 @@
 
 ## 🖥️ All Queries
 
-### 📚 Query One (MongoDB)
+### 📚 Query 1 (MongoDB)
 
 - `disease_name = result["name"]` (Line 20)
 - `edges.find({"metaedge": "CtD", "target": disease_id})` (Line 22)
@@ -20,18 +20,18 @@
 - `edges.find({"source": disease_id, "metaedge": "DlA"})` (Line 34)
 - `nodes.find_one({"id": id})["name"]` (Line 38)
 
-### 🌐 Query Two (Neo4j)
+### 🌐 Query 2 (Neo4j)
 
 - `graph.run('''MATCH (d:Disease{{id:'{}'}})-[:DlA]->(a:Anatomy)-[:AuG|:AdG]->(g:Gene)<-[:CdG|:CuG]-(dc:Compound)-[:CrC*0..1]-(c:Compound)WHERE NOT (c)-->(d) AND ( (a)-[:AdG]->(g)<-[:CuG]-(dc) OR (a)-[:AuG]->(g)<-[:CdG]-(dc))RETURN collect(Distinct c.name)'''.format(new_disease_id))` (Line 50)
 
 ## 🚀 Potential Improvements
 
-### 🌐 Improvements for Query 1 (MongoDB)
+### 🌐 Query 1 (MongoDB)
 
-- Potnetial improvement is to have a collectin for each kind of node. This would shorten the time it takes to search for all the compounds, genes, and anatomies that are related to the disease.
+- To have a collection for each kind of node. This would shorten the time it takes to search for all the compounds, genes, and anatomies that are related to the disease.
 
-- deploying the database on the cloud would allow for faster queries due to sharding techniques.
+- Deploying the database on the cloud would allow for faster queries due to possiblity of sharding.
 
-### 📚 Improvements for Query 2(Neo4j)
+### 📚 Query 2 (Neo4j)
 
-- It would be benificial to use "Read Replicas" to optimize for read-heavy workloads. However, since we deployed the database locally we were unable to utilize this feature.
+- To use "Read Replicas" to optimize for read-heavy workloads. However, since we deployed the database locally we were unable to utilize this feature.
